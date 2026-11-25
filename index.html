@@ -2027,10 +2027,19 @@
         <button sc-camel-on-mouse-enter="{{ closeMega }}" sc-camel-on-click="{{ go_contact }}" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.88);font-family:var(--font-body);font-size:14px;padding:8px 11px;border-radius:8px;white-space:nowrap;border-bottom:2px solid {{ uContact }};">{{ t.navContact }}</button>
       </div>
       <div style="display:flex;align-items:center;gap:12px;">
-        <div style="display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:3px;">
-          <sc-for list="{{ langOptions }}" as="lo" hint-placeholder-count="3">
-            <button sc-camel-on-click="{{ lo.onClick }}" title="{{ lo.full }}" style="background:{{ lo.bg }};color:{{ lo.fg }};border:none;cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:600;padding:5px 11px;border-radius:16px;white-space:nowrap;transition:background .15s ease,color .15s ease;">{{ lo.label }}</button>
-          </sc-for>
+        <div data-lang-dd style="position:relative;">
+          <button sc-camel-on-click="{{ toggleLang }}" aria-haspopup="listbox" aria-expanded="{{ langOpen }}" aria-label="Language" style="display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:20px;color:#fff;cursor:pointer;font-family:var(--font-body);font-size:13px;font-weight:600;padding:7px 12px;white-space:nowrap;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            {{ langCurrent }}
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:rotate({{ langCaret }});transition:transform .15s ease;"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <sc-if value="{{ langOpen }}" hint-placeholder-val="{{ false }}">
+            <div role="listbox" style="position:absolute;top:calc(100% + 8px);right:0;min-width:190px;background:#fff;border:1px solid rgba(11,27,58,.1);border-radius:14px;box-shadow:0 18px 40px rgba(11,27,58,.18);padding:6px;z-index:60;">
+              <sc-for list="{{ langOptions }}" as="lo" hint-placeholder-count="4">
+                <button role="option" sc-camel-on-click="{{ lo.onClick }}" style="display:flex;align-items:center;justify-content:space-between;width:100%;background:{{ lo.menuBg }};color:#0B1B3A;border:none;cursor:pointer;font-family:var(--font-body);font-size:14px;font-weight:{{ lo.menuWeight }};padding:9px 12px;border-radius:9px;text-align:left;white-space:nowrap;">{{ lo.full }}<span style="color:var(--coral);font-size:13px;">{{ lo.check }}</span></button>
+              </sc-for>
+            </div>
+          </sc-if>
         </div>
         <button sc-camel-on-click="{{ go_contact }}" style="background:var(--lime);color:#fff;border:none;cursor:pointer;font-family:var(--font-body);font-weight:500;font-size:14px;padding:10px 18px;border-radius:32px;white-space:nowrap;transition:opacity .15s ease;" sc-camel-on-mouse-enter="{{ __h0 }}" sc-camel-on-mouse-leave="{{ __h1 }}">{{ t.navDemo }}</button>
       </div>
@@ -2169,10 +2178,18 @@
       <a sc-camel-on-click="{{ go_pricing }}" style="cursor:pointer;display:block;color:#fff;font-size:19px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.1);text-decoration:none;">{{ t.navPricing }}</a>
       <a sc-camel-on-click="{{ go_shop }}" style="cursor:pointer;display:block;color:#fff;font-size:19px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.1);text-decoration:none;">{{ t.navHardware }}</a>
       <a sc-camel-on-click="{{ go_contact }}" style="cursor:pointer;display:block;color:#fff;font-size:19px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.1);text-decoration:none;">{{ t.navContact }}</a>
-      <div style="display:flex;align-items:center;gap:8px;margin-top:22px;">
-        <sc-for list="{{ langOptions }}" as="lo" hint-placeholder-count="3">
-          <button sc-camel-on-click="{{ lo.onClick }}" style="flex:1;background:{{ lo.bg }};color:{{ lo.fg }};border:1px solid rgba(255,255,255,.2);cursor:pointer;font-family:var(--font-body);font-size:15px;font-weight:600;padding:11px 0;border-radius:12px;">{{ lo.full }}</button>
-        </sc-for>
+      <div data-lang-dd style="margin-top:22px;">
+        <button sc-camel-on-click="{{ toggleLang }}" aria-haspopup="listbox" aria-expanded="{{ langOpen }}" style="display:flex;align-items:center;justify-content:space-between;width:100%;background:rgba(255,255,255,.06);color:#fff;border:1px solid rgba(255,255,255,.2);cursor:pointer;font-family:var(--font-body);font-size:15px;font-weight:600;padding:12px 16px;border-radius:12px;">
+          <span>{{ t.langLabel }}: {{ langCurrentFull }}</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:rotate({{ langCaret }});transition:transform .15s ease;"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <sc-if value="{{ langOpen }}" hint-placeholder-val="{{ false }}">
+          <div role="listbox" style="margin-top:6px;background:#fff;border-radius:12px;padding:6px;">
+            <sc-for list="{{ langOptions }}" as="lo" hint-placeholder-count="4">
+              <button role="option" sc-camel-on-click="{{ lo.onClick }}" style="display:flex;align-items:center;justify-content:space-between;width:100%;background:{{ lo.menuBg }};color:#0B1B3A;border:none;cursor:pointer;font-family:var(--font-body);font-size:15px;font-weight:{{ lo.menuWeight }};padding:11px 12px;border-radius:9px;text-align:left;">{{ lo.full }}<span style="color:var(--coral);">{{ lo.check }}</span></button>
+            </sc-for>
+          </div>
+        </sc-if>
       </div>
       <button sc-camel-on-click="{{ go_contact }}" style="margin-top:14px;width:100%;background:var(--lime);color:#fff;border:none;font-family:var(--font-body);font-weight:500;font-size:16px;padding:15px;border-radius:32px;cursor:pointer;">{{ t.navDemo }}</button>
     </div>
@@ -3792,14 +3809,16 @@ class Component extends DCLogic {
             productTab:'overview', pricingProduct:'youshop', hwFilter:'all', faq:{}, hwTab:'hardware',
             compareSel:{y1000:true,y4000:true,y5000:true},
             enquire:{open:false,device:'',sent:false}, contactSent:false, cookieBanner:false, carIndex:0,
-            opBiz:'default', lang:'sl', chatOpen:false, chatLog:[] };
+            opBiz:'default', lang:'sl', langOpen:false, chatOpen:false, chatLog:[] };
 
   componentDidMount(){
     this._scroll = () => { const s = window.scrollY > 40; if (s !== this.state.scrolled) this.setState({scrolled:s}); };
     this._resize = () => this.setState({ w: window.innerWidth });
     window.addEventListener('scroll', this._scroll, {passive:true});
     window.addEventListener('resize', this._resize);
-    this._key = (e) => { if (e.key === 'Escape') this.setState({mega:'', mobile:false, enquire:{open:false,device:''}}); };
+    this._key = (e) => { if (e.key === 'Escape') this.setState({mega:'', mobile:false, langOpen:false, enquire:{open:false,device:''}}); };
+    this._langOutside = (e) => { if (this.state.langOpen && !(e.target.closest && e.target.closest('[data-lang-dd]'))) this.setState({langOpen:false}); };
+    document.addEventListener('click', this._langOutside);
     window.addEventListener('keydown', this._key);
     this.setState({ w: window.innerWidth });
     // ---- Language: saved choice wins; else detect from IP; else English ----
@@ -3837,6 +3856,7 @@ class Component extends DCLogic {
     window.removeEventListener('scroll', this._scroll);
     window.removeEventListener('resize', this._resize);
     window.removeEventListener('keydown', this._key);
+    document.removeEventListener('click', this._langOutside);
     if(this._tilt) window.removeEventListener('mousemove', this._tilt);
     if(this._carTimer) clearInterval(this._carTimer);
   }
@@ -3853,31 +3873,27 @@ class Component extends DCLogic {
     const s = ' '+q.toLowerCase().replace(/[^a-z0-9\s]/g,' ')+' ';
     const KB = [
       {k:['price','pricing','cost','how much','plan','plans','tier','tiers','fee','fees','subscription'],
-       a:'DMS starts free forever. youShop: Starter LKR 600/POS/mo, Standard LKR 1,500/POS/mo (most popular), Power LKR 4,500/POS/mo, Enterprise on request. youResto: Starter LKR 1,500, Standard LKR 3,000, Power LKR 7,500/POS/mo. youQR is free to start with a small per-order fee (from LKR 15). Add-ons activate on any tier.'},
+       a:'DMS starts free forever. youShop: Starter LKR 600/store/mo, Standard LKR 1,500/store/mo (most popular), Power LKR 3,000/store/mo, Enterprise on request. youResto: Starter LKR 1,500, Standard LKR 3,000, Power LKR 4,500/store/mo. youQR has no monthly fee on Starter and Standard — just LKR 30 or LKR 75 per paid order — or LKR 7,500/store/mo on Power. Add-ons activate on any tier.'},
       {k:['youshop','you shop','retail pos','shop pos','billing system'],
-       a:'youShop is our smart retail POS — billing, inventory, loyalty and VAT, all from one dashboard. Free on Freemium; Premium tiers from LKR 600/POS/mo.'},
+       a:'youShop is our smart retail POS — billing, inventory, loyalty and VAT, all from one dashboard. Free on Freemium; Premium tiers from LKR 600/store/mo.'},
       {k:['youresto','you resto','restaurant','kot','kitchen display','kds','cafe pos','qsr'],
-       a:'youResto runs restaurants front-to-back: digital KOT, KDS, PickMe Food & Uber Eats, table management and pay-at-table. From LKR 1,500/POS/mo.'},
+       a:'youResto runs restaurants front-to-back: digital KOT, KDS, PickMe Food & Uber Eats, table management and pay-at-table. From LKR 1,500/store/mo.'},
       {k:['youqr','you qr','qr menu','qr code order','scan order','loyalty point','loyalty points','loyalty'],
-       a:'youQR turns one QR code into your whole menu — scan, order and pay in under 60 seconds, no app needed, and every paid order earns loyalty points automatically. Free to start; per-order pricing from LKR 15.'},
+       a:'youQR turns one QR code into your whole menu — scan, order and pay in under 60 seconds, no app needed, and every paid order earns loyalty points automatically. No monthly fee on Starter — LKR 30 per paid order.'},
       {k:['youpay','you pay','payment method','payment methods','accept','tender','card','cards','wallet','wallets','unionpay','union pay','amex','settlement','reconcil'],
        a:'youPay accepts every method in one settlement — LankaQR, LankaPay, Visa, Mastercard, China UnionPay, Amex, mobile wallets, Pay-by-Link, gift cards and SVA — with automatic reconciliation.'},
-      {k:['y750','750'],
-       a:'The Y750 is a printer-free 285g smart Android POS: 8-core 12nm chip (~2x faster), dual 6.7" + 2.5" screens, angled scanner, dual-sided NFC and up to 18.2h battery. LKR 32,700. Pairs with youShop, youQR and youPay.'},
-      {k:['y10','sound box','soundbox'],
-       a:'Y10 is a smart sound box that announces every payment out loud and shows your QR — LKR 4,999. Pairs with youPay and youQR. Add a QR Print Pack (LKR 8,700) for zero-device commerce.'},
+      {k:['y10d','y10','sound box','soundbox'],
+       a:'Y10D is a smart sound box that announces every payment out loud and shows your QR — LKR 12,300. Pairs with youPay and youQR. Add a QR Print Pack (LKR 8,700) for zero-device commerce.'},
       {k:['y7000','7000','kiosk','self-service','self service','self checkout'],
-       a:'Y7000 is a self-service kiosk — customers order and pay themselves with a built-in scanner and printer. LKR 44,999. KDS & kitchen printer coming soon.'},
-      {k:['y1000 lite','y1000lite','lite'],
-       a:'Y1000 Lite is a drop-proof handheld POS for queue-busting on the shop floor. LKR 13,999.'},
+       a:'Y7000 is a self-service kiosk — customers order and pay themselves with a built-in scanner and printer. LKR 247,500.'},
       {k:['y1000','1000','handheld'],
-       a:'Y1000 is our all-in-one handheld POS — billing, stock, payments, a built-in printer and scanner in one device. LKR 15,999.'},
+       a:'Y1000 is our all-in-one handheld POS — billing, stock, payments, a built-in printer and scanner in one device. LKR 57,000.'},
       {k:['y4000','4000','tablet'],
-       a:'Y4000 is an 11" smart tablet POS with a built-in printer and eSIM. LKR 38,999.'},
+       a:'Y4000 is an 11" smart tablet POS with a built-in printer and eSIM. LKR 99,000.'},
       {k:['y5000','5000','desktop','terminal','dual screen','dual-screen'],
-       a:'Y5000 is a dual-screen desktop terminal for fixed counters and supermarkets. LKR 41,999.'},
+       a:'Y5000 is a dual-screen desktop terminal for fixed counters and supermarkets. LKR 123,000.'},
       {k:['device','devices','hardware','which pos','recommend','machine','terminal'],
-       a:'Our devices: Y10 sound box (LKR 4,999), Y50 mPOS (LKR 5,999), Y750 smart Android POS (LKR 32,700), Y1000 handheld (LKR 15,999), Y1000 Lite (LKR 13,999), Y4000 tablet (LKR 38,999), Y5000 desktop terminal (LKR 41,999), Y7000 self-service kiosk (LKR 44,999). Tell me your business type and I can suggest one.'},
+       a:'Our devices: Mobile + BT Printer kit (LKR 18,000), Y10D sound box (LKR 12,300), Y1000 handheld (LKR 57,000), Y4000 tablet (LKR 99,000), Y5000 desktop terminal (LKR 123,000), Y7000 self-service kiosk (LKR 247,500). Tell me your business type and I can suggest one.'},
       {k:['cafe','café','coffee','restaurant device','food'],
        a:'For a café or restaurant, the Y1000 handheld or Y4000 tablet POS work well, with a Y7000 kiosk for self-order — all tied together by youResto.'},
       {k:['shop','retail','store','supermarket','grocery','kade'],
@@ -3885,17 +3901,17 @@ class Component extends DCLogic {
       {k:['free','freemium','trial','no cost'],
        a:'Yes — Freemium is free forever, no card needed. You only upgrade when you hit a limit.'},
       {k:['add-on','add on','addon','addons','youmarketing','youinsight','youlend','youworkflows','youaccounts','fraud','network token'],
-       a:'Add-ons plug into your existing data: youMarketing (LKR 2,700/mo + msg), youInsight (LKR 2,100/mo), youWorkflows (LKR 3,600/mo), youLend (rev-share), youAccounts (LKR 2,400/mo), plus 3DS2, network tokens and advanced fraud rules on Power.'},
+       a:'Add-ons plug into your existing data: youMarketing (LKR 1,500/mo + msg), youInsight (LKR 1,500/mo), youWorkflows (LKR 3,000/mo), youLens (LKR 4,500/mo + LKR 1,500/camera), youLend (rev-share), youAccounts (LKR 1,500/mo), plus 3DS2, network tokens and advanced fraud rules on Power.'},
       {k:['qr print','print pack','table stand','shelf label','counter card','zero device','zero-device'],
        a:'The QR Print Pack is zero-device commerce for LKR 8,700 one-time — table stands, counter cards and shelf labels pre-printed with your branded QR. No device, no counter space.'},
       {k:['bluetooth printer','bt printer','mobile printer','dongle','stall','pop-up','pop up'],
-       a:'The Mobile + BT Printer package is LKR 17,700 — a Bluetooth 58mm printer and card-reader dongle that runs on your own Android/iOS phone. Perfect for micro shops, stalls and pop-ups.'},
+       a:'The Mobile + BT Printer package is LKR 18,000 — a Bluetooth 58mm printer and card-reader dongle that runs on your own Android/iOS phone. Perfect for micro shops, stalls and pop-ups.'},
       {k:['vat','tax','invoice','filing'],
        a:'Every bill is VAT-ready. youShop and youResto generate filing-ready VAT summaries automatically.'},
       {k:['setup','set up','install','onboard','48','how long','get started','activation'],
        a:'We set you up in about 48 hours — we configure the device, import your products or menu, and train your staff.'},
       {k:['language','singlish','sinhala','tamil','english'],
-       a:'The site works in Singlish (default), English, Sinhala and Tamil — switch anytime from the language toggle at the top right.'},
+       a:'The site works in Singlish (default), English, Sinhala and Tamil — switch anytime from the language menu at the top right.'},
       {k:['contact','call','phone','email','talk','sales','demo','reach'],
        a:'Reach the Sri Lanka team from the Contact page, or email info@dmslk.com / call +94 11 2685555. We respond within 24 hours.'},
     ];
@@ -3909,6 +3925,7 @@ class Component extends DCLogic {
     const S = this.state;
     const L = (S.lang && ['sl','en','si','ta'].includes(S.lang)) ? S.lang : 'sl';
     const TR = {
+      langLabel:{en:'Language',si:'භාෂාව',ta:'மொழி'},
       navProducts:{en:'Products',si:'නිෂ්පාදන',ta:'தயாரிப்புகள்'},
       navBusiness:{en:'Business Type',si:'ව්‍යාපාර වර්ග',ta:'வணிக வகை'},
       navPricing:{en:'Pricing',sl:'Pricing / Milə',si:'මිල ගණන්',ta:'விலை'},
@@ -3946,7 +3963,7 @@ class Component extends DCLogic {
       tq8:{en:'LankaQR, cards, wallets — every payment now settles into one report. Reconciliation is no longer my Sunday job.',si:'LankaQR, කාඩ්, wallets — දැන් සෑම ගෙවීමක්ම එක වාර්තාවකට settle වෙනවා. සැසඳීම තවදුරටත් මගේ ඉරිදා වැඩක් නෙවෙයි.',ta:'LankaQR, அட்டைகள், வாலட்கள் — இப்போது ஒவ்வொரு பணமும் ஒரே அறிக்கையில் தீர்வு காண்கிறது. சரிசெய்தல் இனி என் ஞாயிறு வேலை அல்ல.'},
     };
     const t = {}; for (const k in TR) t[k] = TR[k][L] || TR[k].en;
-    const setLang = (lg) => { try{ localStorage.setItem('lgo_lang', lg); }catch(e){} this.setState({lang:lg}); };
+    const setLang = (lg) => { try{ localStorage.setItem('lgo_lang', lg); }catch(e){} this.setState({lang:lg, langOpen:false}); };
     const langOptions = [
       {code:'sl', label:'Singlish', full:'Singlish · සිංග්‍රීසි'},
       {code:'en', label:'EN', full:'English'},
@@ -3954,7 +3971,11 @@ class Component extends DCLogic {
       {code:'ta', label:'தமிழ்', full:'தமிழ்'},
     ].map(o=>({ ...o, active: L===o.code, onClick:()=>setLang(o.code),
       bg: L===o.code ? 'var(--lime)' : 'transparent',
-      fg: L===o.code ? '#0B1B3A' : 'rgba(255,255,255,.8)' }));
+      fg: L===o.code ? '#0B1B3A' : 'rgba(255,255,255,.8)',
+      menuBg: L===o.code ? 'rgba(11,27,58,.06)' : 'transparent',
+      menuWeight: L===o.code ? '700' : '500',
+      check: L===o.code ? '✓' : '' }));
+    const _langCur = langOptions.find(o=>o.active) || langOptions[0];
 
     const desktop = S.w >= 1080;
 
@@ -4032,8 +4053,7 @@ class Component extends DCLogic {
       {name:'Y1000', type:'All-in-One Handheld POS',    img:__IMG['assets/hw/y1000.png']},
       {name:'Y4000', type:'Smart Tablet POS',  img:__IMG['assets/hw/y4000.png']},
       {name:'Y5000', type:'Desktop Terminal',  img:__IMG['assets/hw/y5000.png']},
-      {name:'Y50',   type:'Handheld POS',       img:__IMG['assets/hw/y50.png']},
-      {name:'Y750',  type:'Smart Android POS',  img:__IMG['assets/hw/y750.png']},
+      {name:'Y10D',  type:'Smart Sound Box',    img:__IMG['assets/hw/y10.png']},
       {name:'Y7000', type:'Self-Checkout',      img:__IMG['assets/hw/y7000.png']},
     ].map(d=>({...d, onClick:()=>this.go('shop')}));
 
@@ -4099,7 +4119,7 @@ class Component extends DCLogic {
          {t:'Digital credit book',b:'Track credit customers, send WhatsApp reminders, and settle balances without the notebook.'},
          {t:'VAT on autopilot',b:'Every bill is VAT-ready; download filing-ready summaries in one tap.'}],
         [{name:'youShop',why:'Retail POS built for fast neighbourhood counters.'},{name:'youPay',why:'LankaQR, card and wallet in one clean settlement.'}],
-        ['Y1000','Y50 — Handheld POS'],
+        ['Y1000','Y10D — Sound Box'],
         'Turn your kade into the smartest shop on the street.'),
       restaurant: _bd('Business Type','Restaurant & QSR',
         'From order to kitchen to payment — without the chaos.',
@@ -4121,7 +4141,7 @@ class Component extends DCLogic {
          {t:'Know your bestsellers',b:'Hourly sales insights show what to bake more of, and when.'},
          {t:'Reward regulars',b:'Points and offers that bring your morning crowd back tomorrow.'}],
         [{name:'youResto',why:'Counter + kitchen built for F&B.'},{name:'youMarketing',why:'Loyalty and WhatsApp offers.'}],
-        ['Y1000','Y50 — Handheld POS'],
+        ['Y1000','Y10D — Sound Box'],
         'Keep the queue moving and the regulars coming.'),
       pharmacy: _bd('Business Type','Pharmacy',
         'Billing that respects batches, expiry and compliance.',
@@ -4143,7 +4163,7 @@ class Component extends DCLogic {
          {t:'Move seasonal stock',b:'Spot slow sellers early and run targeted markdowns.'},
          {t:'Know your shoppers',b:'Build profiles and send new-arrival alerts on WhatsApp.'}],
         [{name:'youShop',why:'Retail POS with a full variant matrix.'},{name:'youMarketing',why:'New-arrival and win-back campaigns.'}],
-        ['Y1000','Y50 — Handheld POS'],
+        ['Y1000','Y10D — Sound Box'],
         'Sell more of what your shoppers love.'),
       electronics: _bd('Business Type','Electronics',
         'Serial numbers, warranties and high-value billing.',
@@ -4221,7 +4241,7 @@ class Component extends DCLogic {
          {t:'Remember every customer',b:'Visit and purchase history at your fingertips.'},
          {t:'Audit-ready',b:'Keep compliance and tax records inspection-ready.'}],
         [{name:'youShop',why:'Retail with batch and expiry control.'},{name:'youMarketing',why:'Reminders and re-engagement.'}],
-        ['Y1000','Y50 — Handheld POS'],
+        ['Y1000','Y10D — Sound Box'],
         'Spend time on care, not paperwork.'),
       services: _bd('Industry','Services',
         'Service businesses, billed without friction.',
@@ -4232,7 +4252,7 @@ class Component extends DCLogic {
          {t:'Loyal customers, recognised',b:'History, packages and memberships in one place.'},
          {t:'Get paid, then follow up',b:'LankaQR/card payments with WhatsApp reminders.'}],
         [{name:'youShop',why:'Flexible billing for services.'},{name:'youMarketing',why:'Bookings and reminders.'}],
-        ['Y50 — Handheld POS','Y1000'],
+        ['Y10D — Sound Box','Y1000'],
         'Less admin, more booked slots.'),
       chains: _bd('Industry','Enterprise & Chains',
         'Centralised control across every outlet.',
@@ -4266,7 +4286,7 @@ class Component extends DCLogic {
          {t:'Buy just enough',b:'Demand trends prevent overstocking and dead stock.'},
          {t:'True landed cost',b:'Track cost, tax and margin per item.'}],
         [{name:'youShop',why:'Inventory built into billing.'},{name:'youInsight',why:'Demand forecasting.'}],
-        ['Y50 — Handheld POS','Y1000'],
+        ['Y10D — Sound Box','Y1000'],
         'Stop guessing your stock.'),
       loyalty: _bd('Use case','Loyalty & CRM',
         'Turn one-time buyers into regulars.',
@@ -4288,7 +4308,7 @@ class Component extends DCLogic {
          {t:'Track settlements',b:'See what hit the bank and when, in one place.'},
          {t:'Fast refunds',b:'Process refunds without breaking your books.'}],
         [{name:'youPay',why:'All methods, one settlement.'},{name:'youAccounts',why:'Reconciliation and books.'}],
-        ['Y1000','Y50 — Handheld POS'],
+        ['Y1000','Y10D — Sound Box'],
         'Get paid every way, reconciled every time.'),
       multioutlet: _bd('Use case','Multi-outlet Management',
         'Many outlets. One command centre.',
@@ -4472,9 +4492,9 @@ class Component extends DCLogic {
     // ===== youShop =====
     const youshopPricing = [
       PC('Freemium','Free · forever','LKR 0 forever',false,['1 store · 1 user','100 SKUs · 50 invoices/mo','Basic checkout & billing','Cash + wallet / QR','Offline billing + sync','Daily sales summary'],'Start Free →',bC,goStart),
-      PC('Starter','Premium','LKR 600 / POS / mo',false,['1–2 stores · 2 users','500 SKUs · 500 invoices/mo','+ Barcode scanning','+ Variants (size, colour)','+ Card payments','+ Auto-reconciliation','+ Customer capture (50 records)'],'Get Starter →',bO,goSales),
-      PC('Standard','Premium','LKR 1,500 / POS / mo',true,['3–8 stores · 5 users','5,000 SKUs · 5,000 invoices/mo','+ Batches, expiry & serial tracking','+ Supplier management + auto-reorder','+ Loyalty (points / rewards)','+ Customer segments (500 records)','+ 1 marketplace connector'],'Get Standard →',bC,goSales),
-      PC('Power','Premium','LKR 4,500 / POS / mo',false,['Unlimited stores · users','10,000 SKUs','+ Bulk import / export','+ Inter-store transfers + shrinkage','+ Gift cards & store credit','+ WebShop + Social Selling','+ youAccounts & youHR'],'Get Power →',bD,goSales),
+      PC('Starter','Premium','LKR 600 / store / mo',false,['1–2 stores · 2 users','500 SKUs · 500 invoices/mo','+ Barcode scanning','+ Variants (size, colour)','+ Card payments','+ Auto-reconciliation','+ Customer capture (50 records)'],'Get Starter →',bO,goSales),
+      PC('Standard','Premium','LKR 1,500 / store / mo',true,['3–8 stores · 5 users','5,000 SKUs · 5,000 invoices/mo','+ Batches, expiry & serial tracking','+ Supplier management + auto-reorder','+ Loyalty (points / rewards)','+ Customer segments (500 records)','+ 1 marketplace connector'],'Get Standard →',bC,goSales),
+      PC('Power','Premium','LKR 3,000 / store / mo',false,['Unlimited stores · users','10,000 SKUs','+ Bulk import / export','+ Inter-store transfers + shrinkage','+ Gift cards & store credit','+ WebShop + Social Selling','+ youAccounts & youHR'],'Get Power →',bD,goSales),
       PC('Enterprise','Custom · on request','Contact Sales',false,['Franchise / chain governance','+ Franchise / chain management','+ White-label storefront','+ 3PL logistics integrations','+ SSO (corporate IdP) + API keys','+ REST API & webhook access','+ 24/7 phone support · 1hr SLA'],'See Enterprise →',bD,goSales),
     ];
     const youshopMatrix = [
@@ -4538,7 +4558,7 @@ class Component extends DCLogic {
       Y7000:{type:'Self-Service Kiosk',icon:I.kiosk(),specShort:'Android 13 · 10.1" touch · 1D/2D scanner · thermal printer'},
     };
     const hwImgs = {Y10:__IMG['assets/hw/y10.png'],Y50:__IMG['assets/hw/y50.png'],Y750:__IMG['assets/hw/y750.png'],Y1000:__IMG['assets/hw/y1000.png'],'Y1000 Lite':__IMG['assets/hw/y1000_lite.png'],Y4000:__IMG['assets/hw/y4000.png'],Y5000:__IMG['assets/hw/y5000.png'],Y7000:__IMG['assets/hw/y7000.png']};
-    const hwDispName = {Y1000:'Y1000'};
+    const hwDispName = {Y1000:'Y1000', Y10:'Y10D'};
     const hwFor = (names) => names.map(n=>({ name:hwDispName[n]||n, type:dMeta[n].type, icon:dMeta[n].icon, specShort:dMeta[n].specShort, img:hwImgs[n]||'', noImg:!hwImgs[n] }));
     const ov = (kicker,headline,body,icon,g1,g2,stat) => ({kicker,headline,body,icon,g1,g2,stat});
     const ovList = (arr) => arr.map((b,i)=>({ ...b, revClass: i%2?'rev':'' }));
@@ -4556,9 +4576,9 @@ class Component extends DCLogic {
     // ===== youResto =====
     const yourestoPricing = [
       PC('Freemium','Free · forever','LKR 0 forever',false,['1 outlet · 1 POS','Basic POS + KDS','Cash + wallet / QR','1 aggregator sync','Offline billing + sync','Daily sales summary'],'Start Free →',bC,goStart),
-      PC('Starter','Premium','LKR 1,500 / POS / mo',false,['1 outlet · 2 POS','+ Full KDS + prep timers','+ 86-sync + recipe deduction','+ 2 aggregators unified','+ Card payments','+ Direct delivery app','+ Basic loyalty'],'Get Starter →',bO,goSales),
-      PC('Standard','Premium','LKR 3,000 / POS / mo',true,['3–8 outlets · 5 users','+ 3 aggregators unified','+ Central menu push','+ Cross-outlet analytics','+ Guest app + loyalty','+ Reservations + table plan','+ API access'],'Get Standard →',bC,goSales),
-      PC('Power','Premium','LKR 7,500 / POS / mo',false,['Unlimited outlets · users','+ Course firing · expo · throttling','+ All aggregators unified','+ Central menu / recipe / price','+ Social ordering (FB / IG / WA)','+ youAccounts & youHR','+ Dedicated success manager'],'Get Power →',bD,goSales),
+      PC('Starter','Premium','LKR 1,500 / store / mo',false,['1 outlet · 2 POS','+ Full KDS + prep timers','+ 86-sync + recipe deduction','+ 2 aggregators unified','+ Card payments','+ Direct delivery app','+ Basic loyalty'],'Get Starter →',bO,goSales),
+      PC('Standard','Premium','LKR 3,000 / store / mo',true,['3–8 outlets · 5 users','+ 3 aggregators unified','+ Central menu push','+ Cross-outlet analytics','+ Guest app + loyalty','+ Reservations + table plan','+ API access'],'Get Standard →',bC,goSales),
+      PC('Power','Premium','LKR 4,500 / store / mo',false,['Unlimited outlets · users','+ Course firing · expo · throttling','+ All aggregators unified','+ Central menu / recipe / price','+ Social ordering (FB / IG / WA)','+ youAccounts & youHR','+ Dedicated success manager'],'Get Power →',bD,goSales),
       PC('Enterprise','Quote · on request','Contact Sales',false,['Multi-brand · central kitchen','+ Multi-brand / franchise','+ Central kitchen & commissary','+ White-label guest app','+ SSO + API keys','+ Right-to-audit + DR','+ 24/7 phone support · 1hr SLA'],'See Enterprise →',bD,goSales),
     ];
     const yourestoMatrix = [
@@ -4627,9 +4647,9 @@ class Component extends DCLogic {
     // ===== youQR =====
     const youqrPricing = [
       PC('Freemium','Free','LKR 0 / month',false,['One merchant page · unlimited orders','1 branded merchant page','Unlimited menu items','All payment methods','Basic loyalty (points)','LKR 30 flat / paid order'],'Get my QR →',bC,goStart),
-      PC('Starter','Premium','LKR 0 / month',false,['Custom branding + tiered loyalty','1 branch','Custom colors + logo','Tiered loyalty (Silver → Gold)','Birthday campaigns','Live menu + modifiers','Order analytics','LKR 24 flat / paid order'],'Get Starter →',bO,goSales),
-      PC('Standard','Premium','LKR 0 / month',true,['Custom domain · multi-branch · SVA','Up to 8 branches','Custom domain (your.brand)','Platinum tier + gamified streaks','Stored Value wallet','Multi-branch dashboard','API + webhooks','LKR 15 flat / paid order'],'Get Standard →',bC,goSales),
-      PC('Power','Premium','LKR 7,500 / month',false,['Enterprise QR-led commerce','Unlimited branches','White-label (your brand only)','Custom loyalty engine','youLend working capital','Priority integration support','Dedicated success manager','Custom per-order pricing'],'Talk to sales →',bD,goSales),
+      PC('Starter','Premium','LKR 0 / month',false,['Custom branding + tiered loyalty','1 branch','Custom colors + logo','Tiered loyalty (Silver → Gold)','Birthday campaigns','Live menu + modifiers','Order analytics','LKR 30 flat / paid order'],'Get Starter →',bO,goSales),
+      PC('Standard','Premium','LKR 0 / month',true,['Custom domain · multi-branch · SVA','Up to 8 branches','Custom domain (your.brand)','Platinum tier + gamified streaks','Stored Value wallet','Multi-branch dashboard','API + webhooks','LKR 75 flat / paid order'],'Get Standard →',bC,goSales),
+      PC('Power','Premium','LKR 7,500 / store / month',false,['Enterprise QR-led commerce','Unlimited branches','White-label (your brand only)','Custom loyalty engine','youLend working capital','Priority integration support','Dedicated success manager','Unlimited orders · no per-order fee'],'Talk to sales →',bD,goSales),
     ];
     const youqrMatrix = [
       MS('Core service & ordering',[
@@ -4699,7 +4719,7 @@ class Component extends DCLogic {
         tierSummary: tierSummaryFor('1 store · 100 SKUs · 50 invoices/mo','1–2 stores · 500 SKUs · 500 invoices/mo','3–8 stores · 5,000 SKUs · 5,000 invoices/mo','9+ stores · 10,000 SKUs · 10,000 invoices/mo'),
         tierNames: tierNames4, matrix: youshopMatrix,
         pricingTitle:'Simple pricing. Start free. Pay as you grow.', pricing: youshopPricing,
-        hwTitle:'Hardware built for retail.', hardware: hwFor(['Y1000','Y1000 Lite','Y4000','Y5000']),
+        hwTitle:'Hardware built for retail.', hardware: hwFor(['Y1000','Y4000','Y5000','Y7000']),
         addons: youshopAddons, ctaTitle:'Run your shop the smart way.',
       },
       youresto:{
@@ -4736,7 +4756,7 @@ class Component extends DCLogic {
         tierSummary: tierSummaryFor('1 outlet · 25 items · 100 orders/mo','1–2 outlets · 100 items · 500 orders/mo','3–8 outlets · 500 items · 2,500 orders/mo','9+ outlets · unlimited items & orders'),
         tierNames: tierNames4, matrix: youqrMatrix,
         pricingTitle:'QR pricing. Free to start. White-label to scale.', pricing: youqrPricing,
-        hwTitle:'Hardware built for QR commerce.', hardware: hwFor(['Y10','Y750','Y7000']),
+        hwTitle:'Hardware built for QR commerce.', hardware: hwFor(['Y10','Y1000','Y7000']),
         addons: youqrAddons, ctaTitle:'Put a QR code to work at every table.',
       },
     };
@@ -4784,30 +4804,29 @@ class Component extends DCLogic {
 
     // ===== PRICING master add-ons table =====
     const addonRows = [
-      ['youMarketing (WABA)','WhatsApp order confirmations, promo campaigns, abandoned-cart recovery, 2-way support','Any tier · Per outlet · LKR 749 / mo + per-message'],
-      ['youInsight','AI queries on your data, demand forecasting, SKU mix, peak-hour staffing, anomaly detection','Any tier · LKR 581 / mo'],
+      ['youMarketing (WABA)','WhatsApp order confirmations, promo campaigns, abandoned-cart recovery, 2-way support','Any tier · Per outlet · LKR 1,500 / mo + per-message'],
+      ['youInsight','AI queries on your data, demand forecasting, SKU mix, peak-hour staffing, anomaly detection','Any tier · LKR 1,500 / mo'],
       ['youLend','Pre-approved working capital scored on live transaction data. Revenue-based repayment. No separate application.','Any tier · Flat interest rate · Terms per merchant'],
-      ['youWorkflows','No-code automations: low-stock alerts, supplier escalations, customer journeys, end-of-day rules','Standard & Power · LKR 996 / mo'],
-      ['youLens (AI Camera)','Shrinkage alerts, footfall heatmaps, queue tracking, staff productivity, kitchen hygiene','Any tier · Per outlet · LKR 1,411 / mo + LKR 581 / camera'],
-      ['youAccounts','Bank reconciliation, P&L, balance sheet, supplier mgmt, audit records','LKR 1,411 / mo · Add-on for Starter & Standard · Bundled in Power'],
-      ['youHR (Full Payroll)','Attendance, scheduling, payroll, statutory compliance','LKR 1,162 / mo · Bundled in Power'],
+      ['youWorkflows','No-code automations: low-stock alerts, supplier escalations, customer journeys, end-of-day rules','Standard & Power · LKR 3,000 / mo'],
+      ['youLens (AI Camera)','Shrinkage alerts, footfall heatmaps, queue tracking, staff productivity, kitchen hygiene','Any tier · Per outlet · LKR 4,500 / mo + LKR 1,500 / camera'],
+      ['youAccounts','Bank reconciliation, P&L, balance sheet, supplier mgmt, audit records','LKR 1,500 / mo (Lite LKR 600 / mo) · Add-on for Starter & Standard · Bundled in Power'],
+      ['youHR (Full Payroll)','Attendance, scheduling, payroll, statutory compliance','Lite LKR 150 / user · Full payroll bundled in Power'],
       ['Own Branded App','Fully branded ordering app on your own domain','LKR 3,237 / mo · Bundled in Power'],
       ['WebShop','Branded online storefront with unified inventory across channels','Add-on for Standard · Bundled in Power'],
-      ['Social Selling / Social Ordering','Sell on Facebook Shop, Instagram Shopping, WhatsApp Catalog','LKR 1,162 / mo · Add-on for Standard · Bundled in Power'],
+      ['Social Selling / Social Ordering','Sell on Facebook Shop, Instagram Shopping, WhatsApp Catalog','LKR 1,500 / mo · Add-on for Standard · Bundled in Power'],
       ['3rd-Party Logistics','Smart dispatch to Sri Lanka delivery networks, auto-fallback','Add-on for Standard & Power · Contact Sales'],
       ['Customer / Guest Base Pack','+500 CRM records per pack, stackable','Any tier · LKR 249 / mo per pack'],
       ['Own Branded Delivery App','Branded guest app, zone delivery, real-time tracking, zero commission','Add-on for Standard · Bundled in Power'],
-      ['KDS Stations','Additional kitchen display screen licences','Any tier · LKR 249 / mo per station'],
+      ['KDS Stations','Additional kitchen display screen licences','Any tier · LKR 600 / mo per station'],
       ['API & Webhook Access','Full REST API + webhooks + OpenAPI sandbox','LKR 4,067 / mo · Enterprise (youShop) / Power (youResto)'],
       ['Self-Ordering Kiosk Mode','Convert youQR into a full-screen self-service kiosk','Add-on for Standard & Power (youQR)'],
       ['QR Guest Ordering','Guest self-order and pay via QR, no app download','LKR 996 / mo'],
     ].map((a,i)=>({ name:a[0], does:a[1], avail:a[2], rowBg: i%2?'#fbfaf8':'#ffffff' }));
     const hwBundleRows = [
-      {bundle:'Mobile + BT Printer Package', form:'Bluetooth 58mm printer + card reader dongle', ysPrice:'LKR 17,700', yrPrice:'LKR 17,700', software:'Runs on your Android / iOS phone · one-time'},
+      {bundle:'Mobile + BT Printer Package', form:'Bluetooth 58mm printer + card reader dongle', ysPrice:'LKR 18,000', yrPrice:'LKR 18,000', software:'Runs on your Android / iOS phone · one-time'},
       {bundle:'QR Print Pack', form:'Table stands + counter cards + shelf labels', ysPrice:'LKR 8,700', yrPrice:'LKR 8,700', software:'Zero-device commerce · branded QR · one-time'},
-      {bundle:'Handheld POS Kit', form:'Y1000', ysPrice:'LKR 15,499', yrPrice:'LKR 24,799', software:'Standard tier · renews at list rate yr 2'},
-      {bundle:'Counter / Restaurant POS Kit', form:'Y5000 15" counter POS', ysPrice:'LKR 38,299', yrPrice:'LKR 51,299', software:'Standard tier · renews at list rate yr 2'},
-      {bundle:'KDS & Kitchen Printer', form:'Kitchen display + thermal kitchen printer', ysPrice:'Coming soon', yrPrice:'Coming soon', software:'For youResto kitchens'},
+      {bundle:'Handheld POS Kit', form:'Y1000', ysPrice:'LKR 57,000', yrPrice:'LKR 57,000', software:'Standard tier · renews at list rate yr 2'},
+      {bundle:'Counter / Restaurant POS Kit', form:'Y5000 15" counter POS', ysPrice:'LKR 123,000', yrPrice:'LKR 123,000', software:'Standard tier · renews at list rate yr 2'},
     ].map((r,i)=>({ ...r, rowBg: i%2?'#fbfaf8':'#ffffff' }));
     const masterNotes = [
       'VAT applies to all software subscriptions.',
@@ -4828,10 +4847,8 @@ class Component extends DCLogic {
 
     // ===== SHOP devices =====
     const devBase = [
-      {id:'Y10',name:'Y10',type:'Smart Sound Box',badge:'youPay · youQR',cats:['qr'],icon:I.soundbox(),img:__IMG['assets/hw/y10.png'],specs:['≥110 dB voice payment confirmations','Optional 3.5" QR display','2600 mAh · full-day battery','4G + Wi-Fi dual connectivity','Accepts LankaQR, QR & wallet','Instant settlement alerts']},
-      {id:'Y50',name:'Y50',type:'Handheld mPOS',badge:'youPay',cats:['qr'],icon:I.handheld(),img:__IMG['assets/hw/y50.png'],specs:['NFC tap-to-pay for cards & wallets','Bluetooth 5.0 + BLE pairing','Ultra-light 80 g · pocket-sized','Pairs with iOS, Android & Windows','Secure PIN entry keypad','EMV L1/L2 certified']},
+      {id:'Y10',name:'Y10D',type:'Smart Sound Box',badge:'youPay · youQR',cats:['qr'],icon:I.soundbox(),img:__IMG['assets/hw/y10.png'],specs:['≥110 dB voice payment confirmations','Optional 3.5" QR display','2600 mAh · full-day battery','4G + Wi-Fi dual connectivity','Accepts LankaQR, QR & wallet','Instant settlement alerts']},
       {id:'Y1000',name:'Y1000',type:'All-in-One Handheld POS',badge:'youPay · youShop · youResto',cats:['retail','fnb'],icon:I.monitor(),popular:true,img:__IMG['assets/hw/y1000.png'],specs:['Android 13 · AI sales assistant','6.5" HD+ touchscreen','Built-in 2" thermal receipt printer','1D / 2D barcode scanner','5000 mAh · full-shift battery','LankaQR, card, wallet & QR in one device']},
-      {id:'Y1000L',name:'Y1000 Lite',type:'Handheld POS',badge:'youPay · youShop',cats:['retail','qr'],icon:I.handheld(),img:__IMG['assets/hw/y1000_lite.png'],specs:['Android 14 · 5" touchscreen','Built-in 2" thermal printer','5000 mAh battery','GPS / GLONASS for field sales','Dual camera for scan & KYC','1 m drop-proof, dust resistant']},
       {id:'Y4000',name:'Y4000',type:'Smart Tablet POS',badge:'youPay · youShop · youResto',cats:['retail','fnb'],icon:I.tablet(),img:__IMG['assets/hw/y4000.png'],specs:['Android 13 · 11" FHD IPS display','8000 mAh · counter-to-table battery','58 mm built-in thermal printer','Dual camera (5MP + 2MP)','eSIM + Wi-Fi connectivity','Barcode scan + customer-facing view']},
       {id:'Y5000',name:'Y5000',type:'Smart Desktop Terminal',badge:'youPay · youShop',cats:['retail'],icon:I.desktop2(),img:__IMG['assets/hw/y5000.png'],specs:['Dual 15.6" FHD displays','Customer-facing second screen','RK3568 quad-core · 4GB / 64GB','Bluetooth 5.2 + multi-port I/O','Connect printer, scanner & cash drawer','Android 14 · always-on counter POS']},
       {id:'Y7000',name:'Y7000',type:'Self-Service Kiosk',badge:'youPay · youShop',cats:['qr','fnb'],icon:I.kiosk(),img:__IMG['assets/hw/y7000.png'],specs:['Android 13 · 10.1" touchscreen','1D + 2D barcode scanner','Built-in thermal receipt printer','Wall / pole / counter mount','Self-order & self-checkout','Accepts LankaQR, card & wallet']},
@@ -4843,9 +4860,7 @@ class Component extends DCLogic {
     const scrollToFeatured = ()=>{ requestAnimationFrame(()=>{ const el=document.getElementById('hwFeatured'); if(el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 60, behavior:'smooth' }); }); };
     const shopHeroDevices = [
       {name:'Y1000', img:__IMG['assets/hw/y1000.png'], slug:'y1000'},
-      {name:'Y1000 Lite', img:__IMG['assets/hw/y1000_lite.png'], slug:'y1000lite'},
-      {name:'Y50 mPOS', img:__IMG['assets/hw/y50.png'], slug:'y50'},
-      {name:'Y10 Sound Box', img:__IMG['assets/hw/y10.png'], slug:'y10'},
+      {name:'Y10D Sound Box', img:__IMG['assets/hw/y10.png'], slug:'y10'},
       {name:'Y4000 Tablet', img:__IMG['assets/hw/y4000.png'], slug:'y4000'},
       {name:'Y5000 Counter', img:__IMG['assets/hw/y5000.png'], slug:'y5000'},
       {name:'Y7000 Kiosk', img:__IMG['assets/hw/y7000.png'], slug:'y7000'},
@@ -4856,7 +4871,7 @@ class Component extends DCLogic {
     const _hw = (id,name,type,img,price,badges,rating,reviewCount,benefits,pairing,reviews,popular) =>
       ({ id,name,type,img,price,badges,rating,reviewCount,benefits,pairing,reviews,popular:!!popular });
     const hwCatalog = [
-      _hw('y10','Y10','Smart Sound Box',__IMG['assets/hw/y10.png'],'LKR 4,999',['youPay','youQR'],4.6,64,
+      _hw('y10','Y10D','Smart Sound Box',__IMG['assets/hw/y10.png'],'LKR 12,300',['youPay','youQR'],4.6,64,
         [['Announces every payment out loud','Confirms LankaQR, card and wallet payments with a clear voice alert — no more asking "did it go through?"'],
          ['Shows your QR code, big and bright','A built-in display shows your payment QR clearly, even at a sunny street stall.'],
          ['Runs all day on one charge','Long-life battery gets you through a full day of trade without a charger nearby.'],
@@ -4866,21 +4881,7 @@ class Component extends DCLogic {
         'Pairs with YouPay for instant payment acceptance, and works alongside YouQR for scan-and-pay counters.',
         [{name:'Ramesh Iyer',biz:'Tea Stall Owner, Chennai',quote:'Customers hear the beep and know it\u2019s paid — no more waiting for my phone to load.'},
          {name:'Salma Begum',biz:'Vegetable Vendor, Hyderabad',quote:'Battery lasts my whole market day. I charge it once every two days.'}]),
-      _hw('y50','Y50','Handheld mPOS',__IMG['assets/hw/y50.png'],'LKR 5,999',['youPay'],4.5,41,
-        [['Turns any phone or tablet into a card machine','Connects over Bluetooth to a device you already own — no separate terminal to buy.'],
-         ['Tap to pay, in seconds','Accepts contactless cards, LankaQR and wallets with a single tap.'],
-         ['Light enough to carry anywhere','Fits in a pocket — perfect for table service, home delivery, or door-to-door billing.']],
-        'Pairs with YouPay and the DMS app on any compatible phone or tablet.',
-        [{name:'Deepak Rao',biz:'Home Delivery Service, Mumbai',quote:'I carry it on my bike. Customers pay by card right at the door.'}]),
-      _hw('y750','Y750','Smart Android POS',__IMG['assets/hw/y750.png'],'LKR 32,700',['youPay','youShop','youQR'],4.7,52,
-        [['Twice the speed, half the bulk','An 8-core 12nm chip runs checkout about 2× faster than the previous generation — in a printer-free 285g body.'],
-         ['Two screens, one flow','A 6.7" staff screen and a matched 2.5" customer-facing display keep billing and payment on one device.'],
-         ['Scan without lifting','An angled professional scanner reads barcodes and QR for scan-free inventory checks.'],
-         ['Tap any card, both sides','Dual-sided HCE NFC accepts contactless cards, QR and every major method — GMS certified.'],
-         ['All day on one charge','A 3000mAh high-density battery is rated for up to 18.2 hours of trade.']],
-        'Pairs with YouShop for retail and YouQR for scan-and-pay counters; YouPay handles every payment method.',
-        [{name:'Nadeesha Perera',biz:'Boutique Owner, Colombo',quote:'It is light enough to carry around the shop and fast enough that the queue never builds up.'}]),
-      _hw('y1000','Y1000','All-in-One Handheld POS',__IMG['assets/hw/y1000.png'],'LKR 15,999',['youPay','youShop','youResto'],4.8,188,
+      _hw('y1000','Y1000','All-in-One Handheld POS',__IMG['assets/hw/y1000.png'],'LKR 57,000',['youPay','youShop','youResto'],4.8,188,
         [['Everything on one screen','Billing, stock and payments in a single device — no juggling between apps.'],
          ['Prints receipts instantly','A built-in printer means one less cable and one less gadget on your counter.'],
          ['Scans barcodes without extra hardware','A built-in scanner speeds up billing at a busy counter.'],
@@ -4888,28 +4889,21 @@ class Component extends DCLogic {
         'Pairs with YouShop for retail or YouResto for restaurants — works out of the box from Starter tier upward.',
         [{name:'Rajan Mehta',biz:'General Store Owner, Pune',quote:'I bill 3x faster than before, and my VAT report is ready in one click.'},
          {name:'Priya Sharma',biz:'Restaurant Owner, Bangalore',quote:'One device for billing, printing and payments. My counter is so much less cluttered.'}], true),
-      _hw('y1000lite','Y1000 Lite','Handheld POS',__IMG['assets/hw/y1000_lite.png'],'LKR 13,999',['youPay','youShop'],4.4,96,
-        [['Built to survive a busy counter','Drop-tested from a metre up, so a dropped device doesn\u2019t mean a lost sale.'],
-         ['Bring billing to the customer','Take the till to the queue instead of making people wait at one spot.'],
-         ['Track every device you own','Built-in location tracking helps you keep tabs on hardware across outlets.'],
-         ['A full shift on one charge']],
-        'Pairs with YouShop; ideal for queue-busting and mobile billing on the shop floor.',
-        [{name:'Vikram Nair',biz:'Electronics Retailer, Kochi',quote:'I walk the floor with it during rush hour instead of making customers queue at a till.'}]),
-      _hw('y4000','Y4000','Smart Tablet POS',__IMG['assets/hw/y4000.png'],'LKR 38,999',['youPay','youShop','youResto'],4.6,72,
+      _hw('y4000','Y4000','Smart Tablet POS',__IMG['assets/hw/y4000.png'],'LKR 99,000',['youPay','youShop','youResto'],4.6,72,
         [['A screen big enough for everyone to see','Staff and customers both read the bill clearly, with no squinting.'],
          ['Prints receipts and order slips on the spot','A built-in printer means no separate box to plug in.'],
          ['Stays online even when your Wi-Fi drops','A built-in eSIM keeps you selling through an internet outage.'],
          ['All-day battery for the busiest shift']],
         'Pairs with YouShop or YouResto — a strong fit for growing counters that need a bigger display.',
         [{name:'Ayesha Khan',biz:'Café Owner, Delhi',quote:'The bigger screen means my baristas ring up orders without mistakes during the morning rush.'}]),
-      _hw('y5000','Y5000','Smart Desktop Terminal',__IMG['assets/hw/y5000.png'],'LKR 41,999',['youPay','youShop'],4.7,58,
+      _hw('y5000','Y5000','Smart Desktop Terminal',__IMG['assets/hw/y5000.png'],'LKR 123,000',['youPay','youShop'],4.7,58,
         [['One screen for you, one for your customer','Dual displays mean no more turning the till around to show the bill.'],
          ['Fast enough to never lag at checkout, even during your busiest hour'],
          ['Connects everything at once','Your scanner, printer and cash drawer all plug into one terminal.'],
          ['Built for a counter that runs all day, every day']],
         'Pairs with YouShop — the standard fixed-counter setup for supermarkets and multi-lane stores.',
         [{name:'Suresh Patil',biz:'Supermarket Owner, Nashik',quote:'The customer-facing screen alone cut our billing disputes to almost zero.'}]),
-      _hw('y7000','Y7000','Self-Service Kiosk',__IMG['assets/hw/y7000.png'],'LKR 44,999',['youPay','youResto'],4.3,29,
+      _hw('y7000','Y7000','Self-Service Kiosk',__IMG['assets/hw/y7000.png'],'LKR 247,500',['youPay','youResto'],4.3,29,
         [['Customers order and pay themselves','No queue, no waiting on staff during peak hours.'],
          ['Mount it anywhere','Wall, pole or counter — wherever fits your floor.'],
          ['Works standalone','Built-in scanner and printer, so no extra devices are needed.'],
@@ -5025,11 +5019,11 @@ class Component extends DCLogic {
 
     // ===== ADD-ONS page =====
     const mainAddons = [
-      {icon:I.mega(),name:'youMarketing',tagline:'Payment-triggered campaigns',desc:'Dead-basket recovery, receipt-based upsell, and targeted promos — all fired from your live payment data.',avail:'LKR 2,700 / mo + per-msg'},
-      {icon:I.brain(),name:'youInsight',tagline:'AI-powered reporting',desc:'Payment mix analytics, settlement lead-time, refund and chargeback trends — in plain English.',avail:'LKR 2,100 / mo'},
-      {icon:I.flow(),name:'youWorkflows',tagline:'Automation engine',desc:'Automated reconciliation, dispute routing, and exception queues. No code required.',avail:'LKR 3,600 / mo'},
+      {icon:I.mega(),name:'youMarketing',tagline:'Payment-triggered campaigns',desc:'Dead-basket recovery, receipt-based upsell, and targeted promos — all fired from your live payment data.',avail:'LKR 1,500 / mo + per-msg'},
+      {icon:I.brain(),name:'youInsight',tagline:'AI-powered reporting',desc:'Payment mix analytics, settlement lead-time, refund and chargeback trends — in plain English.',avail:'LKR 1,500 / mo'},
+      {icon:I.flow(),name:'youWorkflows',tagline:'Automation engine',desc:'Automated reconciliation, dispute routing, and exception queues. No code required.',avail:'LKR 3,000 / mo'},
       {icon:I.coins(),name:'youLend',tagline:'Working capital',desc:'Pre-approved from your payment-processing history. Revenue-based repayment, no separate application.',avail:'Rev-share · no monthly fee'},
-      {icon:I.ledger(),name:'youAccounts',tagline:'Auto-bookkeeping',desc:'Sales, MDR, refunds and settlements posted automatically for your merchant account.',avail:'LKR 2,400 / mo'},
+      {icon:I.ledger(),name:'youAccounts',tagline:'Auto-bookkeeping',desc:'Sales, MDR, refunds and settlements posted automatically for your merchant account.',avail:'LKR 1,500 / mo'},
       {icon:I.brain(),name:'3DS2 & SCA compliance',tagline:'Frictionless authentication',desc:'3-D Secure 2, SCA exemption logic, and step-up authentication built in.',avail:'Included on Power'},
       {icon:I.coins(),name:'Network tokens (VTS · MDES)',tagline:'PCI-scoped vault',desc:'Token portability for one-click and MIT flows, safe from card rotation.',avail:'Included on Power'},
       {icon:I.flow(),name:'Advanced fraud rules',tagline:'Custom risk engine',desc:'Custom velocity, geo, BIN and behaviour rules layered on top of the ML engine.',avail:'Custom · on request'},
@@ -5178,6 +5172,9 @@ class Component extends DCLogic {
       // home content
       proofStats, homeProducts, steps, bizStrip, opImgEl, opCaption, hwTeaser, homeAddons, testimonials,
       t, langOptions, setLang, lang: L,
+      langOpen: !!S.langOpen, langCaret: S.langOpen ? '180deg' : '0deg',
+      langCurrent: _langCur.full.split(' · ')[0], langCurrentFull: _langCur.full,
+      toggleLang: () => this.setState(s0 => ({ langOpen: !s0.langOpen })),
       // page flags
       isProduct, isYoupay: S.page==='youpay', isPricing: S.page==='pricing', isShop: S.page==='shop',
       isBusiness: S.page==='business', isSmb: S.page==='smb', isEnterprise: S.page==='enterprise',
@@ -5189,7 +5186,7 @@ class Component extends DCLogic {
       chatLog: (S.chatLog||[]).map(m => m.role==='user'
         ? {text:m.text, align:'flex-end', bg:'var(--navy-dark)', fg:'#fff', border:'none', radius:'14px 14px 4px 14px'}
         : {text:m.text, align:'flex-start', bg:'#fff', fg:'var(--ink)', border:'1px solid var(--hairline)', radius:'14px 14px 14px 4px'}),
-      chatSuggestions: ['What does youShop cost?','Which device suits a café?','What payment methods do you accept?','Tell me about the Y750'].map(q=>({ q, onClick:()=>this.askSuggested(q) })),
+      chatSuggestions: ['What does youShop cost?','Which device suits a café?','What payment methods do you accept?','Tell me about the Y10D'].map(q=>({ q, onClick:()=>this.askSuggested(q) })),
       toggleChat: this.toggleChat, sendChat: this.sendChat,
       // product page
       pd: pdView, productTabs,
