@@ -1908,11 +1908,13 @@
   .pxCard{display:grid;grid-row:span 5;grid-template-rows:subgrid;row-gap:0;position:relative;border-radius:22px;padding:30px 28px 28px;transition:transform .2s ease,box-shadow .2s ease;}
   .pxCard:hover{transform:translateY(-4px);box-shadow:0 24px 50px -22px rgba(7,24,41,.35);}
   .pxCard.isPop{box-shadow:0 30px 60px -28px rgba(7,24,41,.6);}
+  .pxCta{align-self:end;}
   .pxBtn{transition:opacity .15s ease,transform .15s ease;} .pxBtn:hover{opacity:.9;transform:translateY(-1px);}
-  .pxFree{margin-top:20px;display:grid;grid-template-columns:minmax(260px,.9fr) 2fr;gap:clamp(24px,4vw,56px);align-items:center;border-radius:22px;padding:clamp(26px,3.5vw,40px);background:var(--stone);}
-  .pxFreeList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 28px;}
-  @media(max-width:980px){.pxTop{grid-template-columns:1fr;max-width:520px;margin:0 auto;} .pxCard{grid-row:auto;grid-template-rows:none;display:flex;flex-direction:column;} .pxFree{grid-template-columns:1fr;max-width:520px;margin-left:auto;margin-right:auto;}}
-  @media(max-width:560px){.pxFreeList{grid-template-columns:1fr;}}
+  .pxFree{margin-top:20px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:clamp(20px,3vw,40px);align-items:center;border-radius:18px;padding:20px 28px;background:var(--stone);}
+  .pxFreeList{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 20px;padding-left:clamp(20px,3vw,40px);border-left:1px solid rgba(7,24,41,.1);}
+  @media(max-width:980px){.pxTop{grid-template-columns:1fr;max-width:520px;margin:0 auto;} .pxCard{grid-row:auto;grid-template-rows:none;display:flex;flex-direction:column;} .pxCta{align-self:stretch;margin-top:auto;} .pxFree{grid-template-columns:1fr auto;max-width:520px;margin-left:auto;margin-right:auto;} .pxFreeList{grid-column:1 / -1;grid-row:2;padding-left:0;border-left:none;}}
+  @media(max-width:1100px){.pxFreeList{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  @media(max-width:560px){.pxFree{grid-template-columns:1fr;padding:22px;} .pxFreeList{grid-template-columns:1fr;padding-left:0;border-left:none;}}
   .ovrow{display:grid;grid-template-columns:1fr 1.12fr;gap:clamp(32px,5.5vw,72px);align-items:center;}
   .ovrow>.ovmedia{order:2;} .ovrow>.ovtext{order:1;}
   .ovrow.rev>.ovmedia{order:1;} .ovrow.rev>.ovtext{order:2;}
@@ -2767,7 +2769,7 @@
               <div style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.45;color:{{ c.itemFg }};"><span style="flex-shrink:0;width:18px;height:18px;border-radius:50%;background:{{ c.tickBg }};color:{{ c.tickFg }};display:inline-flex;align-items:center;justify-content:center;font-size:10px;margin-top:1px;">✓</span><span>{{ f }}</span></div>
             </sc-for>
           </div>
-          <div style="align-self:end;">
+          <div class="pxCta">
             <button class="pxBtn" sc-camel-on-click="{{ c.onClick }}" style="width:100%;background:{{ c.btnBg2 }};color:{{ c.btnFg2 }};border:{{ c.btnBorder2 }};cursor:pointer;font-family:var(--font-body);font-weight:600;font-size:15px;padding:14px;border-radius:32px;">{{ c.cta }}</button>
           </div>
         </div>
@@ -2776,20 +2778,21 @@
     <sc-if value="{{ pricingHasFree }}" hint-placeholder-val="{{ true }}">
       <div class="pxFree">
         <div>
-          <span style="display:inline-block;background:#fff;color:var(--coral);font-family:var(--font-mono);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:999px;">Free forever · no card needed</span>
-          <div style="font-family:var(--font-display);font-size:28px;letter-spacing:-.6px;color:var(--ink);margin-top:16px;">{{ pricingFree.name }}</div>
-          <div style="font-size:14px;line-height:1.55;color:var(--slate);margin-top:8px;">{{ pricingFree.blurb }}</div>
-          <div style="display:flex;align-items:baseline;gap:8px;margin-top:18px;">
-            <span style="font-family:var(--font-display);font-size:36px;letter-spacing:-1.2px;line-height:1;color:var(--ink);">{{ pricingFree.amount }}</span>
-            <span style="font-size:13px;color:var(--slate);">{{ pricingFree.unit }}</span>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <span style="font-family:var(--font-display);font-size:22px;letter-spacing:-.4px;color:var(--ink);">{{ pricingFree.name }}</span>
+            <span style="background:#fff;color:var(--coral);font-family:var(--font-mono);font-size:9.5px;letter-spacing:.9px;text-transform:uppercase;padding:4px 9px;border-radius:999px;">Free forever</span>
           </div>
-          <button class="pxBtn" sc-camel-on-click="{{ pricingFree.onClick }}" style="margin-top:22px;background:var(--near-black);color:#fff;border:none;cursor:pointer;font-family:var(--font-body);font-weight:600;font-size:15px;padding:14px 28px;border-radius:32px;">{{ pricingFree.cta }}</button>
+          <div style="display:flex;align-items:baseline;gap:6px;margin-top:6px;">
+            <span style="font-family:var(--font-display);font-size:26px;letter-spacing:-.8px;line-height:1;color:var(--ink);">{{ pricingFree.amount }}</span>
+            <span style="font-size:12px;color:var(--slate);">{{ pricingFree.unit }} · no card needed</span>
+          </div>
         </div>
         <div class="pxFreeList">
           <sc-for list="{{ pricingFree.allItems }}" as="f" hint-placeholder-count="6">
-            <div style="display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.45;color:var(--ink);"><span style="flex-shrink:0;width:20px;height:20px;border-radius:50%;background:#fff;color:var(--coral);display:inline-flex;align-items:center;justify-content:center;font-size:11px;margin-top:0;">✓</span><span>{{ f }}</span></div>
+            <div style="display:flex;gap:8px;align-items:center;font-size:13px;line-height:1.35;color:var(--ink);"><span style="flex-shrink:0;width:16px;height:16px;border-radius:50%;background:#fff;color:var(--coral);display:inline-flex;align-items:center;justify-content:center;font-size:9px;">✓</span><span>{{ f }}</span></div>
           </sc-for>
         </div>
+        <button class="pxBtn" sc-camel-on-click="{{ pricingFree.onClick }}" style="background:var(--near-black);color:#fff;border:none;cursor:pointer;font-family:var(--font-body);font-weight:600;font-size:14px;padding:12px 22px;border-radius:32px;white-space:nowrap;">{{ pricingFree.cta }}</button>
       </div>
     </sc-if>
   </div>
